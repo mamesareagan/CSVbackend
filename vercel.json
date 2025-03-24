@@ -1,19 +1,28 @@
 {
-    "version": 2,
-    "builds": [
-      {
-        "src": "config/wsgi.py",
-        "use": "@vercel/python",
-        "config": {
-          "maxLambdaSize": "15mb",
-          "runtime": "python3.11"
-        }
+  "version": 2,
+  "builds": [
+    {
+      "src": "config/wsgi.py",
+      "use": "@vercel/python",
+      "config": {
+        "maxLambdaSize": "15mb",
+        "runtime": "python3.11"
       }
-    ],
-    "routes": [
-      {
-        "src": "/(.*)",
-        "dest": "config.wsgi.application"
+    }
+  ],
+  "routes": [
+    {
+      "src": "/api/(.*)",
+      "dest": "config.wsgi.application",
+      "headers": {
+        "Access-Control-Allow-Origin": "https://csv-frontend-delta.vercel.app",
+        "Access-Control-Allow-Methods": "POST, OPTIONS",
+        "Access-Control-Allow-Headers": "Content-Type"
       }
-    ]
-  }
+    },
+    {
+      "src": "/(.*)",
+      "dest": "config.wsgi.application"
+    }
+  ]
+}
